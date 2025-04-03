@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Project Helper - Turn Your Ideas Into Reality</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4c6ef5;
+            --primary-light: #748ffc;
+            --secondary: #fa5252;
+            --dark: #212529;
+            --light: #f8f9fa;
+            --success: #40c057;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), #7048e8);
+            color: white;
+            padding: 1.5rem 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+        
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 3rem 1rem;
+            background: url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            background-blend-mode: overlay;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            margin-bottom: 2rem;
+            border-radius: 10px;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #ff6b6b;
+        }
+        
+        .steps {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+        
+        .step {
+            flex: 1;
+            min-width: 250px;
+            max-width: 350px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .step h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .prompt-container {
+            margin: 3rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .prompt-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .prompt-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+        }
+        
+        .prompt-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem;
+            position: relative;
+        }
+        
+        .difficulty {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.3rem 0.6rem;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        .prompt-preview {
+            background-color: #f5f5f5;
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 1rem 0;
+            position: relative;
+            max-height: 150px;
+            overflow: hidden;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding: 0.3rem 0.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.8rem;
+        }
+        
+        .copy-btn:hover {
+            background-color: var(--primary-light);
+        }
+        
+        .card-footer {
+            padding: 1rem 1.5rem;
+            background-color: #f9f9fa;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .see-example {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .see-example:hover {
+            color: var(--primary-light);
+        }
+        
+        .tools-section {
+            background-color: #f0f4ff;
+            padding: 3rem 0;
+            margin: 3rem 0;
+            border-radius: 10px;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .tool-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            text-align: center;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tool-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1rem auto;
+            background-color: #f8f9fa;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .tool-card h3 {
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .step {
+                min-width: 100%;
+            }
+        }
+        
+        /* Animation Classes */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .copied {
+            background-color: var(--success) !important;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 1rem;
+            border-radius: 50px;
+            margin: 0 auto 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+        }
+        
+        .nav-item {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            margin: 0 0.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .nav-item:hover, .nav-item.active {
+            background-color: var(--primary);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>AI Project Helper</h1>
+        <p>Turn your ideas into reality with AI-powered project documentation</p>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <h1>Create Your App or Website Today</h1>
+            <p>Transform your creative ideas into well-defined projects using our AI-optimized prompts. Perfect for high school students looking to bring their tech ideas to life!</p>
+            <a href="#get-started" class="btn">Get Started <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="nav">
+            <div class="nav-item active">Product Requirements</div>
+            <div class="nav-item">UI Design</div>
+            <div class="nav-item">Software Specs</div>
+            <div class="nav-item">Resources</div>
+        </div>
+
+        <section id="get-started">
+            <h2 class="section-title">How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Choose Your Document</h3>
+                    <p>Select the type of document you need for your project: Product Requirements, UI Design, or Software Specs.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Copy the Prompt</h3>
+                    <p>Copy our expertly crafted prompt that will guide the AI in generating your document.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Use with AI Tool</h3>
+                    <p>Paste the prompt into your favorite AI tool and watch it generate professional documentation for your project!</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="prompt-container">
+            <h2 class="section-title">Product Requirement Document Prompts</h2>
+            <div class="prompt-cards">
+                <div class="prompt-card">
+                    <div class="card-header">
+                        <h3>Basic PRD Creator</h3>
+                        <div class="difficulty">Beginner</div>
+                    </div>
+                    <div class="card-body">
+                        <p>Perfect for getting started with your first project documentation.</p>
+                        <div class="prompt-preview">
+                            You are an expert product manager. Create a Product Requirements Document for my app idea: [DESCRIBE YOUR IDEA HERE]...
+                            <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                        </div>
+                        <p><strong>Use with:</strong> ChatGPT, Claude, Gemini</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="Enhanced_PRD_Prompt.md" target="_blank" class="see-example">See Example <i class="fas fa-chevron-right"></i></a>
+                        <span><i class="fas fa-thumbs-up"></i> 95% Success</span>
+                    </div>
+                </div>
+
+                <div class="prompt-card">
+                    <div class="card-header">
+                        <h3>Detailed PRD with User Stories</h3>
+                        <div class="difficulty">Intermediate</div>
+                    </div>
+                    <div class="card-body">
+                        <p>Creates a comprehensive PRD with detailed user stories and scenarios.</p>
+                        <div class="prompt-preview">
+                            As a product manager, create a detailed PRD for my [APP TYPE] including user stories, acceptance criteria, and feature prioritization...
+                            <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                        </div>
+                        <p><strong>Use with:</strong> ChatGPT-4, Claude 3 Opus</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="AI_Project_Helper_PRD.md" target="_blank" class="see-example">See Example <i class="fas fa-chevron-right"></i></a>
+                        <span><i class="fas fa-thumbs-up"></i> 92% Success</span>
+                    </div>
+                </div>
+
+                <div class="prompt-card">
+                    <div class="card-header">
+                        <h3>PRD with Success Metrics</h3>
+                        <div class="difficulty">Advanced</div>
+                    </div>
+                    <div class="card-body">
+                        <p>For projects needing clear KPIs and measuring success.</p>
+                        <div class="prompt-preview">
+                            Generate a PRD for [YOUR IDEA] with detailed success metrics, KPIs, and a competitive analysis section...
+                            <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                        </div>
+                        <p><strong>Use with:</strong> ChatGPT-4, Claude 3 Opus</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="AI_Project_Helper_PRD_Enhanced.md" target="_blank" class="see-example">See Example <i class="fas fa-chevron-right"></i></a>
+                        <span><i class="fas fa-thumbs-up"></i> 88% Success</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="prompt-container" style="display: none;">
+            <h2 class="section-title">User Interface Design Prompts</h2>
+            <div class="prompt-cards">
+                <div class="prompt-card">
+                    <div class="card-header">
+                        <h3>Basic UI Design Creator</h3>
+                        <div class="difficulty">Beginner</div>
+                    </div>
+                    <div class="card-body">
+                        <p>Generate a user-friendly interface design for your app or website.</p>
+                        <div class="prompt-preview">
+                            You are an expert UX Designer. Create a User Interface Design Document for my app: [DESCRIBE YOUR IDEA HERE]...
+                            <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                        </div>
+                        <p><strong>Use with:</strong> ChatGPT, Claude, Gemini</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="UI_Design_Prompt.md" target="_blank" class="see-example">See Example <i class="fas fa-chevron-right"></i></a>
+                        <span><i class="fas fa-thumbs-up"></i> 93% Success</span>
+                    </div>
+                </div>
+
+                <div class="prompt-card">
+                    <div class="card-header">
+                        <h3>Responsive Design Specification</h3>
+                        <div class="difficulty">Intermediate</div>
+                    </div>
+                    <div class="card-body">
+                        <p>Create detailed UI specs with responsive design considerations for multiple devices.</p>
+                        <div class="prompt-preview">
+                            As a UX Designer, create a comprehensive UI design document for my [APP TYPE] with mobile, tablet, and desktop considerations...
+                            <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                        </div>
+                        <p><strong>Use with:</strong> ChatGPT-4, Claude 3 Opus</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="AI_Project_Helper_UID.md" target="_blank" class="see-example">See Example <i class="fas fa-chevron-right"></i></a>
+                        <span><i class="fas fa-thumbs-up"></i> 90% Success</span>
+                    </div>
+                </div>
+
+                <div class="prompt-card">
+                    <div class="card-header">
+                        <h3>Accessible UI Design</h3>
+                        <div class="difficulty">Advanced</div>
+                    </div>
+                    <div class="card-body">
+                        <p>Design an inclusive interface with accessibility considerations.</p>
+                        <div class="prompt-preview">
+                            Generate a UI Design Document for [YOUR IDEA] with detailed accessibility guidelines including WCAG compliance, color contrast, and screen reader support...
+                            <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                        </div>
+                        <p><strong>Use with:</strong> ChatGPT-4, Claude 3 Opus</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="AI_Project_Helper_UID.md" target="_blank" class="see-example">See Example <i class="fas fa-chevron-right"></i></a>
+                        <span><i class="fas fa-thumbs-up"></i> 85% Success</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="prompt-container" style="display: none;">
+            <h2 class="section-title">Software Specification Prompts</h2>
+            <div class="prompt-cards">
+                <div class="prompt-card">
+                    <div class="card-header">
+                        <h3>Basic Software Spec Creator</h3>
+                        <div class="difficulty">Beginner</div>
+                    </div>
+                    <div class="card-body">
+                        <p>Generate technical specifications for your app or website.</p>
+                        <div class="prompt-preview">
+                            You are an expert Software Architect. Create a Software Requirements Specification for my app: [DESCRIBE YOUR IDEA HERE]...
+                            <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                        </div>
+                        <p><strong>Use with:</strong> ChatGPT, Claude, Gemini</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="SRS_Prompt.md" target="_blank" class="see-example">See Example <i class="fas fa-chevron-right"></i></a>
+                        <span><i class="fas fa-thumbs-up"></i> 91% Success</span>
+                    </div>
+                </div>
+
+                <div class="prompt-card">
+                    <div class="card-header">
+                        <h3>Architecture & Data Flow</h3>
+                        <div class="difficulty">Intermediate</div>
+                    </div>
+                    <div class="card-body">
+                        <p>Create detailed technical specs with architecture patterns and data flow diagrams.</p>
+                        <div class="prompt-preview">
+                            As a Software Architect, create a comprehensive technical specification for my [APP TYPE] including system design, architecture pattern, and data flow...
+                            <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                        </div>
+                        <p><strong>Use with:</strong> ChatGPT-4, Claude 3 Opus</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="AI_Project_Helper_SRS.md" target="_blank" class="see-example">See Example <i class="fas fa-chevron-right"></i></a>
+                        <span><i class="fas fa-thumbs-up"></i> 88% Success</span>
+                    </div>
+                </div>
+
+                <div class="prompt-card">
+                    <div class="card-header">
+                        <h3>Full-Stack Technical Spec</h3>
+                        <div class="difficulty">Advanced</div>
+                    </div>
+                    <div class="card-body">
+                        <p>Generate comprehensive technical specifications for complex applications.</p>
+                        <div class="prompt-preview">
+                            Create a detailed SRS document for [YOUR IDEA] with complete API design, database schema, authentication flow, and technical stack recommendations...
+                            <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                        </div>
+                        <p><strong>Use with:</strong> ChatGPT-4, Claude 3 Opus</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="AI_Project_Helper_SRS.md" target="_blank" class="see-example">See Example <i class="fas fa-chevron-right"></i></a>
+                        <span><i class="fas fa-thumbs-up"></i> 82% Success</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="tools-section">
+            <h2 class="section-title">Recommended AI Tools</h2>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>ChatGPT</h3>
+                    <p>Versatile AI assistant for generating all types of documentation.</p>
+                    <a href="https://chat.openai.com" target="_blank" class="btn btn-secondary">Try It</a>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-comment-dots"></i>
+                    </div>
+                    <h3>Claude</h3>
+                    <p>Excellent for detailed, nuanced documentation with reasoning.</p>
+                    <a href="https://claude.ai" target="_blank" class="btn btn-secondary">Try It</a>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3>Gemini</h3>
+                    <p>Google's AI with strong technical documentation capabilities.</p>
+                    <a href="https://gemini.google.com" target="_blank" class="btn btn-secondary">Try It</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>AI Project Helper - Helping students bring their ideas to life</p>
+                <p>© 2025 AI Project Helper. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function copyToClipboard(button) {
+            const promptText = button.parentElement.innerText.replace('Copy', '').trim();
+            navigator.clipboard.writeText(promptText);
+            
+            button.textContent = "Copied!";
+            button.classList.add("copied");
+            
+            setTimeout(() => {
+                button.textContent = "Copy";
+                button.classList.remove("copied");
+            }, 2000);
+        }
+
+        // Navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set initial state - first tab active, others hidden
+            const promptContainers = document.querySelectorAll('.prompt-container');
+            promptContainers.forEach((container, idx) => {
+                container.style.display = idx === 0 ? 'block' : 'none';
+            });
+            document.querySelector('.tools-section').style.display = 'none';
+        });
+        
+        document.querySelectorAll('.nav-item').forEach((item, index) => {
+            item.addEventListener('click', function() {
+                // Update active tab
+                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Get all prompt containers
+                const promptContainers = document.querySelectorAll('.prompt-container');
+                
+                // Hide all prompt containers first
+                promptContainers.forEach(container => {
+                    container.style.display = 'none';
+                });
+                
+                // Set the visibility of sections based on the selected tab
+                const toolsSection = document.querySelector('.tools-section');
+                
+                if (index === 0) {
+                    // Product Requirements tab
+                    promptContainers[0].style.display = 'block';
+                    toolsSection.style.display = 'none';
+                } else if (index === 1) {
+                    // UI Design tab
+                    promptContainers[1].style.display = 'block';
+                    toolsSection.style.display = 'none';
+                } else if (index === 2) {
+                    // Software Specs tab
+                    promptContainers[2].style.display = 'block';
+                    toolsSection.style.display = 'none';
+                } else if (index === 3) {
+                    // Resources tab - show tools section only
+                    toolsSection.style.display = 'block';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

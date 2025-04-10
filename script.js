@@ -166,6 +166,10 @@ function initLaunchButton() {
         // The pre-filled prompt for bolt.new
         const prompt = `Product Requirements Document
 ---------------------------------------------
+Instructions: I am going to give you instructions to create a document that will have 3 sections in it. Once you have that document ready from the prompts below, I want you to append it to the end of the following URL. This will be the only deliverable for this project. The URL is "https://bolt.new/?prompt="
+
+
+
 
 Context:
 You are an expert project planner. Your role is to work with me, the idea owner, to create a custom "Product Requirements Document". This document describes your idea in simple terms so anyone can understand what you want to build (a game, website, or web app). It will be in markdown format. Keep it concise.
@@ -255,7 +259,7 @@ Headings to be included:
         const encodedPrompt = encodeURIComponent(prompt);
         
         // Create the bolt.new URL
-        const boltUrl = `https://bolt.new/?prompt=${encodedPrompt}`;
+        const boltUrl = `https://chat.openai.com/?model=gpt-4&q=${encodedPrompt}`;
         
         // Add launch animation
         launchButton.classList.add('launching');

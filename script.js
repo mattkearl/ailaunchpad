@@ -144,6 +144,7 @@ function initParallax() {
 // Launch button functionality
 function initLaunchButton() {
     const launchButton = document.getElementById('launch-button');
+    const loginButton = document.getElementById('login-button');
     
     if (!launchButton) return;
     
@@ -161,6 +162,23 @@ function initLaunchButton() {
             buttonGlow.style.opacity = '0';
         }
     });
+    
+    // Add hover effect for login button
+    if (loginButton) {
+        loginButton.addEventListener('mouseenter', () => {
+            const buttonGlow = loginButton.querySelector('.button-glow');
+            if (buttonGlow) {
+                buttonGlow.style.opacity = '1';
+            }
+        });
+        
+        loginButton.addEventListener('mouseleave', () => {
+            const buttonGlow = loginButton.querySelector('.button-glow');
+            if (buttonGlow) {
+                buttonGlow.style.opacity = '0';
+            }
+        });
+    }
     
     launchButton.addEventListener('click', function() {
         // The pre-filled prompt for bolt.new
@@ -232,8 +250,9 @@ Instructions:
 2. Ask questions about your project details. For example, "What happens when a user clicks a button?" or "Which features are most important?" Also ask, "What tools or coding languages are you interested in, if any?"
 3. If possible, keep the tools or technologies as simple as possible.
 4. Make sure to follow best security practices.
-5. Produce a simple markdown file (using headings and bullet points) that outlines the requirements using the exact format in the Headings to be included section. For simple projects, mark some detailed sections as optional.
-6. Do not generate any code until the following documents have been created "Product Requirements Document", "User Interface Design Document", and "Software Requirements Specification Document", and the user has given permission to start.
+5. Use free stock photos from unsplash if any images need to be included. If they images do not display because of a broken path, then find some that do.
+6. Produce a simple markdown file (using headings and bullet points) that outlines the requirements using the exact format in the Headings to be included section. For simple projects, mark some detailed sections as optional.
+7. Do not generate any code until the following documents have been created "Product Requirements Document", "User Interface Design Document", and "Software Requirements Specification Document", and the user has given permission to start.
 
 Headings to be included:
 - Purpose and Scope - (Brief introduction to what the project will do)

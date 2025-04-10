@@ -144,7 +144,6 @@ function initParallax() {
 // Launch button functionality
 function initLaunchButton() {
     const launchButton = document.getElementById('launch-button');
-    const loginButton = document.getElementById('login-button');
     
     if (!launchButton) return;
     
@@ -162,23 +161,6 @@ function initLaunchButton() {
             buttonGlow.style.opacity = '0';
         }
     });
-    
-    // Add hover effect for login button
-    if (loginButton) {
-        loginButton.addEventListener('mouseenter', () => {
-            const buttonGlow = loginButton.querySelector('.button-glow');
-            if (buttonGlow) {
-                buttonGlow.style.opacity = '1';
-            }
-        });
-        
-        loginButton.addEventListener('mouseleave', () => {
-            const buttonGlow = loginButton.querySelector('.button-glow');
-            if (buttonGlow) {
-                buttonGlow.style.opacity = '0';
-            }
-        });
-    }
     
     launchButton.addEventListener('click', function() {
         // The pre-filled prompt for bolt.new

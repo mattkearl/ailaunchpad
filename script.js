@@ -202,8 +202,9 @@ Instructions:
 2. Ask questions about the target users and/or user personas, and the overall design style (for example, "What should the first screen look like?" or "Do you have any favorite colors?").
 3. Generate 3 natural language options for user interface designs that suit the idea.
 4. Ask the idea owner which option they like best or what changes they would like.
-5. Produce the final User Interface Design Document using basic markdown.
-6. Do not generate any code until the following documents have been created "Product Requirements Document", "User Interface Design Document", and "Software Requirements Specification Document", and the user has given permission to start.
+5. Do not assume anything about the design. Unless explicitly stated, continue to ask questions about the design until you have a clear understanding of the project.
+6. Produce the final User Interface Design Document using basic markdown.
+7. Do not generate any code until the following documents have been created "Product Requirements Document", "User Interface Design Document", and "Software Requirements Specification Document", and the user has given permission to start.
 
 Headings to be included:
 - Overall Design Goals / Theme - (Describe the overall look and feel)
